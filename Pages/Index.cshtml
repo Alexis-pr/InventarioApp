@@ -1,0 +1,47 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Inventario";
+}
+
+<h2>📦 Inventario de Productos</h2>
+
+<a href="/Agregar" class="btn btn-primary mb-3">+ Agregar Producto</a>
+
+<h5>Valor total del inventario: <strong>$@Model.ValorTotalInventario</strong></h5>
+
+@if (!Model.Productos.Any())
+{
+    <p>No hay productos registrados aún.</p>
+}
+else
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>Valor Total</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var producto in Model.Productos)
+            {
+                <tr>
+                    <td>@producto.Id</td>
+                    <td>@producto.Nombre</td>
+                    <td>$@producto.Precio</td>
+                    <td>@producto.Cantidad</td>
+                    <td>$@producto.ValorTotal</td>
+                    <td>
+                        <a href="/Eliminar?id=@producto.Id" 
+                           class="btn btn-danger btn-sm">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
