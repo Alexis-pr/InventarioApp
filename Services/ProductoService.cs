@@ -1,9 +1,10 @@
 using InventarioApp.Models;
+using InventarioApp.Interfaces;
+
 namespace InventarioApp.Services;
 
 
-public class ProductoService
-{
+public class ProductoService : IProductoService{
     private List<Producto> _productos = new();
     private int _nextId = 1;
 
@@ -28,5 +29,29 @@ public class ProductoService
     // Calcula el valor total de todo el inventario
     public decimal ObtenerValorInventario()
         => _productos.Sum(p => p.ValorTotal);
+
+
+    public void Actualizar(Producto producto)
+    {
+        var existente = _productos.FirstOrDefault(p=> p.Id == producto.Id);
+        if(existente != null)
+        {
+            existente.Nombre = producto.Nombre;
+            existente.Precio = producto.Precio;
+            existente.Cantidad = producto.Cantidad;
+        }
+    }
+
+    public Producto? ObtenerPorId( int id)
+        =>_productos.FirstOrDefault(p => p.Id == id);
+
+        
+    public List<Producto> Buscar(string termino)
+        =>_productos.Where(p => p.Nombre.Contains(termino, StringComparison.OrdinalIgnoreCase)).ToList();
+    
+
+
+
+
 
 }

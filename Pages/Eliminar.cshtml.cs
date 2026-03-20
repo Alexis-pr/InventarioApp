@@ -1,14 +1,14 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using InventarioApp.Services;
 
+using InventarioApp.Interfaces;
 namespace InventarioApp.Pages;
 
 public class EliminarModel : PageModel
 {
-    private readonly ProductoService _productoService;
+    private readonly IProductoService  _productoService;
 
-    public EliminarModel(ProductoService productoService)
+    public EliminarModel(IProductoService  productoService)
     {
         _productoService = productoService;
     }

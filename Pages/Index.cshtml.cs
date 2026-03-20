@@ -1,15 +1,15 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using InventarioApp.Models;
-using InventarioApp.Services;
 
+using InventarioApp.Interfaces;
 namespace InventarioApp.Pages;
 
 public class IndexModel : PageModel
 {
-    private readonly ProductoService _productoService;
+    private readonly IProductoService _productoService;
 
-    // ASP.NET inyecta el servicio automáticamente 💉
-    public IndexModel(ProductoService productoService)
+    public IndexModel(IProductoService  productoService)
     {
         _productoService = productoService;
     }
@@ -17,9 +17,17 @@ public class IndexModel : PageModel
     public List<Producto> Productos { get; set; } = new();
     public decimal ValorTotalInventario { get; set; }
 
+    [BindProperty(SupportsGet = true)]
+    public string? Busqueda { get; set; }
+
     public void OnGet()
     {
-        Productos = _productoService.ObtenerTodos();
+        Productos = string.IsNullOrEmpty(Busqueda)
+            ? _productoService.ObtenerTodos()
+            : _productoService.Buscar(Busqueda);
+
         ValorTotalInventario = _productoService.ObtenerValorInventario();
     }
 }
+
+

@@ -1,15 +1,15 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using InventarioApp.Models;
-using InventarioApp.Services;
+using InventarioApp.Interfaces;
 
 namespace InventarioApp.Pages;
 
 public class AgregarModel : PageModel
 {
-    private readonly ProductoService _productoService;
+    private readonly IProductoService  _productoService;
 
-    public AgregarModel(ProductoService productoService)
+    public AgregarModel(IProductoService  productoService)
     {
         _productoService = productoService;
     }
